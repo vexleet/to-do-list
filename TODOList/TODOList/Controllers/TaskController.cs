@@ -45,5 +45,26 @@ namespace TODOList.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public ActionResult Details(int? id)
+        {
+            if(id == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            using (var db = new TaskDbContext())
+            {
+                var task = db.Tasks.Find(id);
+
+                if(task == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                return View(task);
+            }
+        } 
     }
 }
